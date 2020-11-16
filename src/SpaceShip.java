@@ -1,26 +1,19 @@
 public interface SpaceShip {
-    default boolean launch(int cargoCarried, int cargoLimit, int percentExplosionChance) {
-        boolean isLunched = true;
-        // miejsce na wzór
-        return isLunched;
+
+    default boolean launch() {
+        return true;
     }
 
-    default boolean land(int cargoCarried, int cargoLimit, int percentExplosionChance) {
-        boolean isLanded = true;
-        // miejsce na wzór
-        return isLanded;
+    default boolean land() {
+        return true;
     }
 
     default boolean canCarry (Item item){
-        boolean carryPossibility = true;
-        // miejsce na wzór
-        return carryPossibility;
+        return true;
     }
 
     default int carry (Item item){
-        int updetedWeight = item.getWeight();
-        // miejsca na wzór
-        return  updetedWeight;
+        return 0;
     }
 
 
