@@ -2,29 +2,27 @@ import java.util.Random;
 
 public class U2 extends Rocket {
 
-    Rocket u2HeavyRocket = new Rocket(120, 10_000, 18_000,
-            5, 1);
+    public static final int rocketCostMln = 120;
+    public static final int weightOfRocketKg = 18_000;
+    public static final int maxWeightWithCargo = 29_000;
+    public static final int launchExplosionChancePercent = 4;
+    public static final int landingCrushChancePercent = 8;
+    public static final double maxCargoCarry = 11_000;
+    public static double currentCargoCarried;
 
-    private double currentCargoCarried = 0;
-    private double maxCargoCarry = u2HeavyRocket.getMaxWeightWithCargo() - u2HeavyRocket.getWeightOfRocketKg();
-    private double lunchU2ExplosionChanceResultPercent = calcLunchChance();
-    private double landingU2CrashChanceResultPercent = calcLandingChance();
-
-    public U2(int rocketCostMln, int weightOfRocketKg, int maxWeightWithCargo, int launchExplosionChancePercent, int landingCrushChancePercent) {
-        super(rocketCostMln, weightOfRocketKg, maxWeightWithCargo, launchExplosionChancePercent, landingCrushChancePercent);
+    public U2(int rocketCostMln, int weightOfRocketKg, int maxWeightWithCargo,
+              double launchExplosionChancePercent, double landingCrushChancePercent, double currentCargoCarried) {
+        super(rocketCostMln, weightOfRocketKg, maxWeightWithCargo,
+                launchExplosionChancePercent, landingCrushChancePercent, currentCargoCarried);
     }
 
-    public Rocket getU2HeavyRocket() {
-        return u2HeavyRocket;
-    }
-
-    private double calcLandingChance() {
-        lunchU2ExplosionChanceResultPercent = (u2HeavyRocket.getLaunchExplosionChancePercent()) * (currentCargoCarried / maxCargoCarry);
+    public static double calcLunchChance() {
+        double lunchU2ExplosionChanceResultPercent = (launchExplosionChancePercent) * (currentCargoCarried / maxCargoCarry);
         return lunchU2ExplosionChanceResultPercent;
     }
 
-    private double calcLunchChance() {
-        landingU2CrashChanceResultPercent = (u2HeavyRocket.getLandingCrushChancePercent()) * (currentCargoCarried / maxCargoCarry);
+    public static double calcLandingChance() {
+        double landingU2CrashChanceResultPercent = (landingCrushChancePercent) * (currentCargoCarried / maxCargoCarry);
         return landingU2CrashChanceResultPercent;
     }
 
@@ -32,8 +30,8 @@ public class U2 extends Rocket {
     public boolean launch() {
         boolean isLaunched;
         Random random = new Random();
-        double randomNr = random.nextInt(100);          // for example chance for fail = 0.05 it's means that
-        if (lunchU2ExplosionChanceResultPercent >= randomNr) {    // in 100 cases 5 times we should get less or equal for our value
+        double randomNr = random.nextInt(100);      // for example chance for fail = 0.04 it's means that
+        if (calcLunchChance() >= randomNr) {               // in 100 cases 4 times we should get less or equal for our value
             isLaunched = false;
         } else {
             isLaunched = true;
@@ -46,7 +44,7 @@ public class U2 extends Rocket {
         boolean isLanding;
         Random random = new Random();
         double randomNr = random.nextInt(100);
-        if (landingU2CrashChanceResultPercent >= randomNr) {
+        if (calcLandingChance() >= randomNr) {
             isLanding = false;
         } else {
             isLanding = true;
@@ -57,5 +55,10 @@ public class U2 extends Rocket {
     @Override
     public boolean canCarry(Item item) {
         return super.canCarry(item);
+    }
+
+    @Override
+    public int carry(Item item) {
+        return super.carry(item);
     }
 }

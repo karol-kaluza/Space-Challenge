@@ -5,14 +5,21 @@ public class Rocket implements SpaceShip {
     private int maxWeightWithCargo;
     private double launchExplosionChancePercent;
     private double landingCrushChancePercent;
+    private double currentCargoCarried;
+
 
     public Rocket(int rocketCostMln, int weightOfRocketKg, int maxWeightWithCargo,
-                  int launchExplosionChancePercent, int landingCrushChancePercent) {
+                  double launchExplosionChancePercent, double landingCrushChancePercent, double currentCargoCarried) {
         this.rocketCostMln = rocketCostMln;
         this.weightOfRocketKg = weightOfRocketKg;
         this.maxWeightWithCargo = maxWeightWithCargo;
         this.launchExplosionChancePercent = launchExplosionChancePercent;
         this.landingCrushChancePercent = landingCrushChancePercent;
+        this.currentCargoCarried = currentCargoCarried;
+    }
+
+    public Rocket() {
+
     }
 
     @Override
@@ -38,14 +45,7 @@ public class Rocket implements SpaceShip {
     @Override
     public int carry(Item item) {
         int updatedWeightOfRocket;
-        if (weightOfRocketKg + item.getWeight() <= maxWeightWithCargo) {
-            updatedWeightOfRocket = weightOfRocketKg + item.getWeight();
-            return updatedWeightOfRocket;
-        } else {
-            System.out.println("Warning ! Rocket is too heavy");
-            updatedWeightOfRocket = weightOfRocketKg + item.getWeight();
-            return updatedWeightOfRocket;
-        }
+        return updatedWeightOfRocket = weightOfRocketKg + item.getWeight();
     }
 
     public int getRocketCostMln() {
@@ -86,5 +86,13 @@ public class Rocket implements SpaceShip {
 
     public void setLandingCrushChancePercent(double landingCrushChancePercent) {
         this.landingCrushChancePercent = landingCrushChancePercent;
+    }
+
+    public double getCurrentCargoCarried() {
+        return currentCargoCarried;
+    }
+
+    public void setCurrentCargoCarried(double currentCargoCarried) {
+        this.currentCargoCarried = currentCargoCarried;
     }
 }
