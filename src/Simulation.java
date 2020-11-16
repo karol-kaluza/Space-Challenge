@@ -10,6 +10,7 @@ public class Simulation {
     private int successCounter = 0;
     private int explosionByStart = 0;
     private int crashByLanding = 0;
+    private int totalRocketsSend = successCounter + explosionByStart + crashByLanding;
 
     public ArrayList<Item> loadItems(Scanner scanFile) {
         ArrayList<Item> items = new ArrayList<>();
@@ -86,5 +87,9 @@ public class Simulation {
 
     public int getCrashByLanding() {
         return crashByLanding;
+    }
+
+    public int getTotalRocketsSend() {
+        return totalRocketsSend;
     }
 }
