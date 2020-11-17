@@ -23,23 +23,49 @@ public class Simulation {
         return items;
     }
 
-    public ArrayList<U1> loadU1(ArrayList<Item> items) {
-        ArrayList<U1> u1rockets = new ArrayList<>();
-        U1 u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
+    public ArrayList<Rocket> loadU1(ArrayList<Item> items) {
+        ArrayList<Rocket> promyKosmiczne = new ArrayList<>();
+
+        Rocket u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
                 U1.launchExplosionChancePercent, U1.landingCrushChancePercent, U1.maxCargoCarry);
-        for (Item element : items) {
-            while (!u1Rocket.canCarry(element)) {
-                u1rockets.add(new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
-                        U1.launchExplosionChancePercent, U1.landingCrushChancePercent, U1.maxCargoCarry));
-            }
-            u1Rocket.carry(element);
-        }
-        return u1rockets;
+        for (int i = 0; i < items.size(); i++) {
+            while (u1Rocket.canCarry(items.get(i))) {
+                u1Rocket.carry(items.get(i));
+            }promyKosmiczne.add(u1Rocket);
+            u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
+                    U1.launchExplosionChancePercent, U1.landingCrushChancePercent, U1.maxCargoCarry);
+        } return promyKosmiczne;
+
     }
 
+
+    //    public ArrayList<Rocket> loadU1(ArrayList<Item> items) {
+//
+//        ArrayList<Rocket> promyKosmiczne = new ArrayList<>();
+//
+//        for (int i = 0; i < items.size(); i++) {
+//            Rocket u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
+//                    U1.launchExplosionChancePercent, U1.landingCrushChancePercent, U1.maxCargoCarry);
+//            while (u1Rocket.canCarry(items.get(i))){
+//                u1Rocket.carry(items.get(i));
+//            }new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
+//                    U1.launchExplosionChancePercent,U1.landingCrushChancePercent, U1.maxCargoCarry);
+//        }
+//
+//
+//        for (Item element : items) {
+//            Rocket u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
+//                    U1.launchExplosionChancePercent, U1.landingCrushChancePercent, U1.maxCargoCarry);
+//            if (u1Rocket.canCarry(element)) {
+//                u1Rocket.carry(element);
+//            }
+//            promyKosmiczne.add(u1Rocket);
+//        }
+//        return promyKosmiczne;
+//    }
     public ArrayList<U2> loadU2(ArrayList<Item> items) {
         ArrayList<U2> u1rockets = new ArrayList<>();
-        U2 u2Rocket = new U2(U2.rocketCostMln, U2.weightOfRocketKg, U2.maxWeightWithCargo,
+        Rocket u2Rocket = new U2(U2.rocketCostMln, U2.weightOfRocketKg, U2.maxWeightWithCargo,
                 U2.launchExplosionChancePercent, U2.landingCrushChancePercent, U2.maxCargoCarry);
         for (Item element : items) {
             while (!u2Rocket.canCarry(element)) {
@@ -68,9 +94,8 @@ public class Simulation {
                 currentBudget += rocket.getRocketCostMln();
                 System.out.println("Rocket exploded by start");
             }
-
-
-        } return currentBudget;
+        }
+        return currentBudget;
     }
 
     public int getTotalBudget() {

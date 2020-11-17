@@ -8,7 +8,7 @@ public class U1 extends Rocket {
     public static final int launchExplosionChancePercent = 5;
     public static final int landingCrushChancePercent = 1;
     public static final double maxCargoCarry = 8_000;
-    public static double currentCargoCarried;
+    public static double currentCargoCarried = 0;
 
     public U1(int rocketCostMln, int weightOfRocketKg, int maxWeightWithCargo,
               double launchExplosionChancePercent, double landingCrushChancePercent, double currentCargoCarried) {
@@ -55,12 +55,17 @@ public class U1 extends Rocket {
 
     @Override
     public boolean canCarry(Item item) {
-        return super.canCarry(item);
+        if(maxCargoCarry > currentCargoCarried + item.getWeight()){
+            return false;
+        }else {
+            return true;
+        }
+
     }
 
     @Override
     public int carry(Item item) {
-        return super.carry(item);
+        return (int) (currentCargoCarried += item.getWeight());
     }
 
 

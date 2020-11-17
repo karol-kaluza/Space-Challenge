@@ -15,19 +15,15 @@ public class Main {
 
         Simulation simulation = new Simulation();
 
-        ArrayList <Item> itemsPhase1 = new ArrayList<>();
-        simulation.loadItems(scanFile1);
+        ArrayList <Item> itemsPhaseOne = simulation.loadItems(scanFile1);
+        ArrayList <Item> itemsPhaseTwo = simulation.loadItems(scanFile2);
 
-        ArrayList <Item> itemsPhase2 = new ArrayList<>();
-        simulation.loadItems(scanFile2);
+        ArrayList <Rocket> rocketsU1PhaseOne = simulation.loadU1(itemsPhaseOne);
+        ArrayList <Rocket> rocketsU1PhaseTwo = simulation.loadU1(itemsPhaseTwo);
 
-        ArrayList <Rocket> rocketsU1 = new ArrayList<>();
-        simulation.loadU1(itemsPhase1);
-        simulation.loadU1(itemsPhase2);
-
-        int budgetU1 = simulation.runSimulation(rocketsU1);
+        int budgetU1 = simulation.runSimulation(rocketsU1PhaseOne);
         System.out.println("-----------------------------------------------------------");
-        System.out.println("Total rockets U1 send: " + simulation.getTotalRocketsSend());
+        System.out.println("Total rockets U1 send: " + simulation.getSuccessCounter());
         System.out.println("Required budget: " + budgetU1 + " mln $");
 
     }
