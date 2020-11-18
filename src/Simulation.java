@@ -24,63 +24,52 @@ public class Simulation {
     }
 
     public ArrayList<Rocket> loadU1(ArrayList<Item> items) {
-        ArrayList<Rocket> promyKosmiczne = new ArrayList<>();
+        ArrayList<Rocket> fleetRocketsU1 = new ArrayList<>();
 
         Rocket u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
-                U1.launchExplosionChancePercent, U1.landingCrushChancePercent, U1.maxCargoCarry);
+                U1.launchExplosionChancePercent, U1.landingCrushChancePercent,
+                U1.maxCargoCarry, 0);
         for (int i = 0; i < items.size(); i++) {
-            while (u1Rocket.canCarry(items.get(i))) {
+            if (u1Rocket.canCarry(items.get(i))) {
                 u1Rocket.carry(items.get(i));
-            }promyKosmiczne.add(u1Rocket);
-            u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
-                    U1.launchExplosionChancePercent, U1.landingCrushChancePercent, U1.maxCargoCarry);
-        } return promyKosmiczne;
-
-    }
-
-
-    //    public ArrayList<Rocket> loadU1(ArrayList<Item> items) {
-//
-//        ArrayList<Rocket> promyKosmiczne = new ArrayList<>();
-//
-//        for (int i = 0; i < items.size(); i++) {
-//            Rocket u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
-//                    U1.launchExplosionChancePercent, U1.landingCrushChancePercent, U1.maxCargoCarry);
-//            while (u1Rocket.canCarry(items.get(i))){
-//                u1Rocket.carry(items.get(i));
-//            }new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
-//                    U1.launchExplosionChancePercent,U1.landingCrushChancePercent, U1.maxCargoCarry);
-//        }
-//
-//
-//        for (Item element : items) {
-//            Rocket u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
-//                    U1.launchExplosionChancePercent, U1.landingCrushChancePercent, U1.maxCargoCarry);
-//            if (u1Rocket.canCarry(element)) {
-//                u1Rocket.carry(element);
-//            }
-//            promyKosmiczne.add(u1Rocket);
-//        }
-//        return promyKosmiczne;
-//    }
-    public ArrayList<U2> loadU2(ArrayList<Item> items) {
-        ArrayList<U2> u1rockets = new ArrayList<>();
-        Rocket u2Rocket = new U2(U2.rocketCostMln, U2.weightOfRocketKg, U2.maxWeightWithCargo,
-                U2.launchExplosionChancePercent, U2.landingCrushChancePercent, U2.maxCargoCarry);
-        for (Item element : items) {
-            while (!u2Rocket.canCarry(element)) {
-                u1rockets.add(new U2(U2.rocketCostMln, U2.weightOfRocketKg, U2.maxWeightWithCargo,
-                        U2.launchExplosionChancePercent, U2.landingCrushChancePercent, U2.maxCargoCarry));
             }
-            u2Rocket.carry(element);
+            if (u1Rocket.getCurrentCargoCarried() >= u1Rocket.getMaxCargoCarry()
+                    || items.get(i).getWeight() >= (u1Rocket.getMaxCargoCarry() - u1Rocket.getCurrentCargoCarried())) {
+                fleetRocketsU1.add(u1Rocket);
+                u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
+                        U1.launchExplosionChancePercent, U1.landingCrushChancePercent,
+                        U1.maxCargoCarry, 0);
+            }
         }
-        return u1rockets;
+        return fleetRocketsU1;
+
     }
 
-    public int runSimulation(ArrayList<Rocket> rockets) {
+    public ArrayList<Rocket> loadU2(ArrayList<Item> items) {
+        ArrayList<Rocket> fleetRocketsU2 = new ArrayList<>();
+
+        Rocket u2Rocket = new U2(U2.rocketCostMln, U2.weightOfRocketKg, U2.maxWeightWithCargo,
+                U2.launchExplosionChancePercent, U2.landingCrushChancePercent,
+                U2.maxCargoCarry, 0);
+        for (int i = 0; i < items.size(); i++) {
+            if (u2Rocket.canCarry(items.get(i))) {
+                u2Rocket.carry(items.get(i));
+            }
+            if (u2Rocket.getCurrentCargoCarried() >= u2Rocket.getMaxCargoCarry()
+                    || items.get(i).getWeight() >= (u2Rocket.getMaxCargoCarry() - u2Rocket.getCurrentCargoCarried())) {
+                fleetRocketsU2.add(u2Rocket);
+                u2Rocket = new U2(U2.rocketCostMln, U2.weightOfRocketKg, U2.maxWeightWithCargo,
+                        U2.launchExplosionChancePercent, U2.landingCrushChancePercent,
+                        U2.maxCargoCarry, 0);
+            }
+        }
+        return fleetRocketsU2;
+    }
+
+    public int runSimulation(ArrayList<Rocket> fleetOfRockets) {
         int currentBudget = 0;
 
-        for (Rocket rocket : rockets) {
+        for (Rocket rocket : fleetOfRockets) {
             if (rocket.launch() && rocket.land()) {
                 successCounter++;
                 currentBudget += rocket.getRocketCostMln();

@@ -5,16 +5,19 @@ public class Rocket implements SpaceShip {
     private int maxWeightWithCargo;
     private double launchExplosionChancePercent;
     private double landingCrushChancePercent;
+    private double maxCargoCarry;
     private double currentCargoCarried;
 
 
     public Rocket(int rocketCostMln, int weightOfRocketKg, int maxWeightWithCargo,
-                  double launchExplosionChancePercent, double landingCrushChancePercent, double currentCargoCarried) {
+                  double launchExplosionChancePercent, double landingCrushChancePercent,
+                  double maxCargoCarry, double currentCargoCarried) {
         this.rocketCostMln = rocketCostMln;
         this.weightOfRocketKg = weightOfRocketKg;
         this.maxWeightWithCargo = maxWeightWithCargo;
         this.launchExplosionChancePercent = launchExplosionChancePercent;
         this.landingCrushChancePercent = landingCrushChancePercent;
+        this.maxCargoCarry = maxCargoCarry;
         this.currentCargoCarried = currentCargoCarried;
     }
 
@@ -34,18 +37,16 @@ public class Rocket implements SpaceShip {
 
     @Override
     public boolean canCarry(Item item) {
-        boolean isCarryPossible;
-        if (item.getWeight() + weightOfRocketKg <= maxWeightWithCargo) {
-            return isCarryPossible = true;
-        } else {
-            return isCarryPossible = false;
+        if(maxCargoCarry >= currentCargoCarried + item.getWeight()){
+            return true;
+        }else {
+            return false;
         }
     }
 
     @Override
-    public int carry(Item item) {
-        int updatedWeightOfRocket;
-        return updatedWeightOfRocket = weightOfRocketKg + item.getWeight();
+    public double carry(Item item) {
+        return (currentCargoCarried += item.getWeight());
     }
 
     public int getRocketCostMln() {
@@ -86,6 +87,14 @@ public class Rocket implements SpaceShip {
 
     public void setLandingCrushChancePercent(double landingCrushChancePercent) {
         this.landingCrushChancePercent = landingCrushChancePercent;
+    }
+
+    public double getMaxCargoCarry() {
+        return maxCargoCarry;
+    }
+
+    public void setMaxCargoCarry(double maxCargoCarry) {
+        this.maxCargoCarry = maxCargoCarry;
     }
 
     public double getCurrentCargoCarried() {

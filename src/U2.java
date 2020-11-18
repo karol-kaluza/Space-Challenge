@@ -11,9 +11,12 @@ public class U2 extends Rocket {
     public static double currentCargoCarried;
 
     public U2(int rocketCostMln, int weightOfRocketKg, int maxWeightWithCargo,
-              double launchExplosionChancePercent, double landingCrushChancePercent, double currentCargoCarried) {
+              double launchExplosionChancePercent, double landingCrushChancePercent, double maxCargoCarry, double currentCargoCarried) {
         super(rocketCostMln, weightOfRocketKg, maxWeightWithCargo,
-                launchExplosionChancePercent, landingCrushChancePercent, currentCargoCarried);
+                launchExplosionChancePercent, landingCrushChancePercent, maxCargoCarry, currentCargoCarried);
+    }
+
+    public U2() {
     }
 
     public static double calcLunchChance() {
@@ -58,7 +61,7 @@ public class U2 extends Rocket {
     }
 
     @Override
-    public int carry(Item item) {
+    public double carry(Item item) {
         return super.carry(item);
     }
 }

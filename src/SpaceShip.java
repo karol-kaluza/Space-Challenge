@@ -12,7 +12,7 @@ public interface SpaceShip {
         return true;
     }
 
-    default int carry (Item item){
+    default double carry (Item item){
         return 0;
     }
 

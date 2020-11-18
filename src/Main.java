@@ -21,10 +21,19 @@ public class Main {
         ArrayList <Rocket> rocketsU1PhaseOne = simulation.loadU1(itemsPhaseOne);
         ArrayList <Rocket> rocketsU1PhaseTwo = simulation.loadU1(itemsPhaseTwo);
 
-        int budgetU1 = simulation.runSimulation(rocketsU1PhaseOne);
-        System.out.println("-----------------------------------------------------------");
-        System.out.println("Total rockets U1 send: " + simulation.getSuccessCounter());
-        System.out.println("Required budget: " + budgetU1 + " mln $");
+        int budgetU1PhaseOne = simulation.runSimulation(rocketsU1PhaseOne);
+        int budgetU1PhaseTwo = simulation.runSimulation(rocketsU1PhaseTwo);
+        int totalBudgetU1 = budgetU1PhaseTwo + budgetU1PhaseTwo;
+
+        ArrayList <Rocket> rocketsU2PhaseOne = simulation.loadU2(itemsPhaseOne);
+        ArrayList <Rocket> rocketsU2PhaseTwo = simulation.loadU2(itemsPhaseTwo);
+
+        int budgetU2PhaseOne = simulation.runSimulation(rocketsU2PhaseOne);
+        int budgetU2PhaseTwo = simulation.runSimulation(rocketsU2PhaseTwo);
+        int totalBudgetU2 = budgetU1PhaseTwo + budgetU1PhaseTwo;
+
+        System.out.println("Required total budget fleet U1 = " + totalBudgetU1 + " mln $");
+        System.out.println("Required total budget fleet U2 = " + totalBudgetU2 + " mln $");
 
     }
 }
