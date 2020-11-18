@@ -19,13 +19,14 @@ public class U2 extends Rocket {
     public U2() {
     }
 
-    public static double calcLunchChance() {
-        double lunchU2ExplosionChanceResultPercent = (launchExplosionChancePercent) * (currentCargoCarried / maxCargoCarry);
+    public double calcLunchChance() {
+        double lunchU2ExplosionChanceResultPercent;
+        lunchU2ExplosionChanceResultPercent = launchExplosionChancePercent * (this.getCurrentCargoCarried() / this.getMaxCargoCarry());
         return lunchU2ExplosionChanceResultPercent;
     }
 
-    public static double calcLandingChance() {
-        double landingU2CrashChanceResultPercent = (landingCrushChancePercent) * (currentCargoCarried / maxCargoCarry);
+    public double calcLandingChance() {
+        double landingU2CrashChanceResultPercent = (landingCrushChancePercent) * (this.getCurrentCargoCarried() / this.getMaxCargoCarry());
         return landingU2CrashChanceResultPercent;
     }
 

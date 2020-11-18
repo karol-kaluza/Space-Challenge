@@ -19,16 +19,16 @@ public class U1 extends Rocket {
     public U1() {
     }
 
-    public static double calcLunchChance() {
-        double lunchU1ExplosionChanceResultPercent = (launchExplosionChancePercent) * (currentCargoCarried / maxCargoCarry);
+    public double calcLunchChance() {
+        double lunchU1ExplosionChanceResultPercent;
+        lunchU1ExplosionChanceResultPercent = launchExplosionChancePercent * (this.getCurrentCargoCarried() / this.getMaxCargoCarry());
         return lunchU1ExplosionChanceResultPercent;
     }
 
-    public static double calcLandingChance() {
-        double landingU1CrashChanceResultPercent = (landingCrushChancePercent) * (currentCargoCarried / maxCargoCarry);
+    public double calcLandingChance() {
+        double landingU1CrashChanceResultPercent = (landingCrushChancePercent) * (this.getCurrentCargoCarried() / this.getMaxCargoCarry());
         return landingU1CrashChanceResultPercent;
     }
-
 
     @Override
     public boolean launch() {

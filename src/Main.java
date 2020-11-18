@@ -18,20 +18,23 @@ public class Main {
         ArrayList <Item> itemsPhaseOne = simulation.loadItems(scanFile1);
         ArrayList <Item> itemsPhaseTwo = simulation.loadItems(scanFile2);
 
-        ArrayList <Rocket> rocketsU1PhaseOne = simulation.loadU1(itemsPhaseOne);
-        ArrayList <Rocket> rocketsU1PhaseTwo = simulation.loadU1(itemsPhaseTwo);
+        ArrayList <U1> fleetU1PhaseOne = simulation.loadU1(itemsPhaseOne);
+        ArrayList <U1> fleetU1PhaseTwo = simulation.loadU1(itemsPhaseTwo);
 
-        int budgetU1PhaseOne = simulation.runSimulation(rocketsU1PhaseOne);
-        int budgetU1PhaseTwo = simulation.runSimulation(rocketsU1PhaseTwo);
-        int totalBudgetU1 = budgetU1PhaseTwo + budgetU1PhaseTwo;
+        ArrayList <U2> fleetU2PhaseOne = simulation.loadU2(itemsPhaseOne);
+        ArrayList <U2> fleetU2PhaseTwo = simulation.loadU2(itemsPhaseTwo);
 
-        ArrayList <Rocket> rocketsU2PhaseOne = simulation.loadU2(itemsPhaseOne);
-        ArrayList <Rocket> rocketsU2PhaseTwo = simulation.loadU2(itemsPhaseTwo);
+        int budgetU1PhaseOne = simulation.runSimulationU1(fleetU1PhaseOne);
+        int budgetU1PhaseTwo = simulation.runSimulationU1(fleetU1PhaseTwo);
+        int totalBudgetU1 = budgetU1PhaseOne + budgetU1PhaseTwo;
+        System.out.println(" ");
 
-        int budgetU2PhaseOne = simulation.runSimulation(rocketsU2PhaseOne);
-        int budgetU2PhaseTwo = simulation.runSimulation(rocketsU2PhaseTwo);
-        int totalBudgetU2 = budgetU1PhaseTwo + budgetU1PhaseTwo;
+        int budgetU2PhaseOne = simulation.runSimulationU2(fleetU2PhaseOne);
+        int budgetU2PhaseTwo = simulation.runSimulationU2(fleetU2PhaseTwo);
+        int totalBudgetU2 = budgetU2PhaseOne + budgetU2PhaseTwo;
 
+
+        System.out.println(" ");
         System.out.println("Required total budget fleet U1 = " + totalBudgetU1 + " mln $");
         System.out.println("Required total budget fleet U2 = " + totalBudgetU2 + " mln $");
 

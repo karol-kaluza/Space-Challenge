@@ -23,10 +23,10 @@ public class Simulation {
         return items;
     }
 
-    public ArrayList<Rocket> loadU1(ArrayList<Item> items) {
-        ArrayList<Rocket> fleetRocketsU1 = new ArrayList<>();
+    public ArrayList<U1> loadU1(ArrayList<Item> items) {
+        ArrayList<U1> fleetRocketsU1 = new ArrayList<>();
 
-        Rocket u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
+        U1 u1Rocket = new U1(U1.rocketCostMln, U1.weightOfRocketKg, U1.maxWeightWithCargo,
                 U1.launchExplosionChancePercent, U1.landingCrushChancePercent,
                 U1.maxCargoCarry, 0);
         for (int i = 0; i < items.size(); i++) {
@@ -45,10 +45,10 @@ public class Simulation {
 
     }
 
-    public ArrayList<Rocket> loadU2(ArrayList<Item> items) {
-        ArrayList<Rocket> fleetRocketsU2 = new ArrayList<>();
+    public ArrayList<U2> loadU2(ArrayList<Item> items) {
+        ArrayList<U2> fleetRocketsU2 = new ArrayList<>();
 
-        Rocket u2Rocket = new U2(U2.rocketCostMln, U2.weightOfRocketKg, U2.maxWeightWithCargo,
+        U2 u2Rocket = new U2(U2.rocketCostMln, U2.weightOfRocketKg, U2.maxWeightWithCargo,
                 U2.launchExplosionChancePercent, U2.landingCrushChancePercent,
                 U2.maxCargoCarry, 0);
         for (int i = 0; i < items.size(); i++) {
@@ -66,26 +66,126 @@ public class Simulation {
         return fleetRocketsU2;
     }
 
-    public int runSimulation(ArrayList<Rocket> fleetOfRockets) {
+    public int runSimulationU1(ArrayList<U1> fleetOfRockets) {
         int currentBudget = 0;
+        ArrayList<U1> totalRocketSend = new ArrayList<>();
+        ArrayList<U1> crushedRockets = new ArrayList<>();   // must be send again
+        ArrayList<U1> successfulRockets = new ArrayList<>();
 
-        for (Rocket rocket : fleetOfRockets) {
-            if (rocket.launch() && rocket.land()) {
-                successCounter++;
-                currentBudget += rocket.getRocketCostMln();
-                System.out.println("Rocket successful landed on Mars");
-            } else if (rocket.launch() && !rocket.land()) {
-                crashByLanding++;
-                currentBudget += rocket.getRocketCostMln();
-                System.out.println("Rocket crushed by landing");
+        for (U1 currentRocket : fleetOfRockets) {
+            if (currentRocket.launch() && currentRocket.land()) {
+                successfulRockets.add(currentRocket);
+                totalRocketSend.add(currentRocket);
+                currentBudget += currentRocket.getRocketCostMln();
+                System.out.println("Rocket U1 successful landed on Mars");
+            } else if (currentRocket.launch() && !currentRocket.land()) {
+                crushedRockets.add(currentRocket);
+                totalRocketSend.add(currentRocket);
+                currentBudget += currentRocket.getRocketCostMln();
+                System.out.println("Rocket U1 crushed by landing");
             } else {
-                explosionByStart++;
-                currentBudget += rocket.getRocketCostMln();
-                System.out.println("Rocket exploded by start");
+                crushedRockets.add(currentRocket);
+                totalRocketSend.add(currentRocket);
+                currentBudget += currentRocket.getRocketCostMln();
+                System.out.println("Rocket U1 explosion by start");
             }
+        }
+        if (!crushedRockets.isEmpty()) {
+            while (!crushedRockets.isEmpty()) {
+                for (U1 currentNextRocket : fleetOfRockets) {
+                    if (currentNextRocket.launch() && currentNextRocket.land()) {
+                        crushedRockets.remove(crushedRockets.size() - 1);
+                        successfulRockets.add(currentNextRocket);
+                        totalRocketSend.add(currentNextRocket);
+                        currentBudget += currentNextRocket.getRocketCostMln();
+                        System.out.println("Rocket U1 successful landed on Mars");
+                        if (crushedRockets.isEmpty()) {
+                            return currentBudget;
+                        }
+                    } else if (currentNextRocket.launch() && !currentNextRocket.land()) {
+                        totalRocketSend.add(currentNextRocket);
+                        currentBudget += currentNextRocket.getRocketCostMln();
+                        System.out.println("Rocket U1 crushed by landing again");
+                        if (crushedRockets.isEmpty()) {
+                            return currentBudget;
+                        }
+                    } else {
+                        totalRocketSend.add(currentNextRocket);
+                        currentBudget += currentNextRocket.getRocketCostMln();
+                        System.out.println("Rocket U1 explosion by start again");
+                        if (crushedRockets.isEmpty()) {
+                            return currentBudget;
+                        }
+                    }
+                }
+
+            }
+        }else {
+            return currentBudget;
         }
         return currentBudget;
     }
+
+    public int runSimulationU2(ArrayList<U2> fleetOfRockets) {
+        int currentBudget = 0;
+        ArrayList<U2> totalRocketSend = new ArrayList<>();
+        ArrayList<U2> crushedRockets = new ArrayList<>();   // must be send again
+        ArrayList<U2> successfulRockets = new ArrayList<>();
+
+        for (U2 currentRocket : fleetOfRockets) {
+            if (currentRocket.launch() && currentRocket.land()) {
+                successfulRockets.add(currentRocket);
+                totalRocketSend.add(currentRocket);
+                currentBudget += currentRocket.getRocketCostMln();
+                System.out.println("Rocket U2 successful landed on Mars");
+            } else if (currentRocket.launch() && !currentRocket.land()) {
+                crushedRockets.add(currentRocket);
+                totalRocketSend.add(currentRocket);
+                currentBudget += currentRocket.getRocketCostMln();
+                System.out.println("Rocket U2 crushed by landing");
+            } else {
+                crushedRockets.add(currentRocket);
+                totalRocketSend.add(currentRocket);
+                currentBudget += currentRocket.getRocketCostMln();
+                System.out.println("Rocket U2 explosion by start");
+            }
+        }
+        if (!crushedRockets.isEmpty()) {
+            while (!crushedRockets.isEmpty()) {
+                for (U2 currentNextRocket : fleetOfRockets) {
+                    if (currentNextRocket.launch() && currentNextRocket.land()) {
+                        crushedRockets.remove(crushedRockets.size() - 1);
+                        successfulRockets.add(currentNextRocket);
+                        totalRocketSend.add(currentNextRocket);
+                        currentBudget += currentNextRocket.getRocketCostMln();
+                        System.out.println("Rocket U2 successful landed on Mars");
+                        if (crushedRockets.isEmpty()) {
+                            return currentBudget;
+                        }
+                    } else if (currentNextRocket.launch() && !currentNextRocket.land()) {
+                        totalRocketSend.add(currentNextRocket);
+                        currentBudget += currentNextRocket.getRocketCostMln();
+                        System.out.println("Rocket U2 crushed by landing again");
+                        if (crushedRockets.isEmpty()) {
+                            return currentBudget;
+                        }
+                    } else {
+                        totalRocketSend.add(currentNextRocket);
+                        currentBudget += currentNextRocket.getRocketCostMln();
+                        System.out.println("Rocket U2 explosion by start again");
+                        if (crushedRockets.isEmpty()) {
+                            return currentBudget;
+                        }
+                    }
+                }
+
+            }
+        } else {
+            return currentBudget;
+        }
+        return currentBudget;
+    }
+
 
     public int getTotalBudget() {
         return totalBudget;
