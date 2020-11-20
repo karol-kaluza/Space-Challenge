@@ -77,7 +77,7 @@ public class Simulation {
                 successfulRockets.add(currentRocket);
                 totalRocketSend.add(currentRocket);
                 currentBudget += currentRocket.getRocketCostMln();
-                System.out.println("Rocket U1 successful landed on Mars");
+                System.out.println("Rocket U1 successful landed");
             } else if (currentRocket.launch() && !currentRocket.land()) {
                 crushedRockets.add(currentRocket);
                 totalRocketSend.add(currentRocket);
@@ -98,7 +98,7 @@ public class Simulation {
                         successfulRockets.add(currentNextRocket);
                         totalRocketSend.add(currentNextRocket);
                         currentBudget += currentNextRocket.getRocketCostMln();
-                        System.out.println("Rocket U1 successful landed on Mars");
+                        System.out.println("Rocket U1 successful landed");
                         if (crushedRockets.isEmpty()) {
                             return currentBudget;
                         }
@@ -137,7 +137,7 @@ public class Simulation {
                 successfulRockets.add(currentRocket);
                 totalRocketSend.add(currentRocket);
                 currentBudget += currentRocket.getRocketCostMln();
-                System.out.println("Rocket U2 successful landed on Mars");
+                System.out.println("Rocket U2 successful landed");
             } else if (currentRocket.launch() && !currentRocket.land()) {
                 crushedRockets.add(currentRocket);
                 totalRocketSend.add(currentRocket);
@@ -158,7 +158,7 @@ public class Simulation {
                         successfulRockets.add(currentNextRocket);
                         totalRocketSend.add(currentNextRocket);
                         currentBudget += currentNextRocket.getRocketCostMln();
-                        System.out.println("Rocket U2 successful landed on Mars");
+                        System.out.println("Rocket U2 successful landed");
                         if (crushedRockets.isEmpty()) {
                             return currentBudget;
                         }

@@ -27,7 +27,7 @@ public class Main {
         int budgetU1PhaseOne = simulation.runSimulationU1(fleetU1PhaseOne);
         int budgetU1PhaseTwo = simulation.runSimulationU1(fleetU1PhaseTwo);
         int totalBudgetU1 = budgetU1PhaseOne + budgetU1PhaseTwo;
-        System.out.println(" ");
+        System.out.println("  ");
 
         int budgetU2PhaseOne = simulation.runSimulationU2(fleetU2PhaseOne);
         int budgetU2PhaseTwo = simulation.runSimulationU2(fleetU2PhaseTwo);

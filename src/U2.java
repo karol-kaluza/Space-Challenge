@@ -34,8 +34,8 @@ public class U2 extends Rocket {
     public boolean launch() {
         boolean isLaunched;
         Random random = new Random();
-        double randomNr = random.nextInt(100);      // for example chance for fail = 0.04 it's means that
-        if (calcLunchChance() >= randomNr) {               // in 100 cases 4 times we should get less or equal for our value
+        double randomNr = random.nextInt(100);       // bound 100 represents 100 %
+        if (calcLunchChance() >= randomNr) {               // scope between 0 and int calcLunchChance, represents chance for crash
             isLaunched = false;
         } else {
             isLaunched = true;
